@@ -41,7 +41,7 @@ router.get("/users/:id", async (req, res) => {
   }
 });
 
-// updating resources
+// updating users
 
 router.patch("/users/:id", async (req, res) => {
   const updates = Object.keys(req.body);
