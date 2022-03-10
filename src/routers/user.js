@@ -14,6 +14,20 @@ router.post("/users", async (req, res) => {
   }
 });
 
+// route for loggin in users
+
+router.post("/users/login", async (req, res) => {
+  try {
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    res.send(user);
+  } catch (e) {
+    res.status(400).send();
+  }
+});
+
 // resource reading endpoints for users
 // for all users
 
