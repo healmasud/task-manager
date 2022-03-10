@@ -14,7 +14,7 @@ router.post("/users", async (req, res) => {
   }
 });
 
-// route for loggin in users
+// route for loggin users
 
 router.post("/users/login", async (req, res) => {
   try {
@@ -22,7 +22,8 @@ router.post("/users/login", async (req, res) => {
       req.body.email,
       req.body.password
     );
-    res.send(user);
+    const token = await user.generateAuthToken();
+    res.send({ user, token });
   } catch (e) {
     res.status(400).send();
   }

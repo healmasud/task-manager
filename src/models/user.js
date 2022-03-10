@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // adding middleware
 
@@ -44,6 +45,14 @@ const userSchema = new mongoose.Schema({
     },
   },
 });
+
+// jsonwebtoken
+
+userSchema.methods.generateAuthToken = async function () {
+  const user = this; // easy to navigate the code
+  const token = jwt.sign({ _id: user._id.toString() }, "thisismynewapp");
+  return token;
+};
 
 // login
 
