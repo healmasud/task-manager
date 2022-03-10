@@ -44,13 +44,23 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
-// jsonwebtoken
+// genarate auth tokens
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this; // easy to navigate the code
   const token = jwt.sign({ _id: user._id.toString() }, "thisismynewapp");
+  user.tokens = user.tokens.concat({ token });
+  await user.save();
   return token;
 };
 
