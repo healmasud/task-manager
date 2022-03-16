@@ -58,13 +58,13 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this; // easy to navigate the code
-  const token = jwt.sign({ _id: user._id.toString() }, "thisismynewapp");
+  const token = jwt.sign({ _id: user._id.toString() }, "thisismynewapp"); // secret 'thisismynewapp'
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
 };
 
-// login
+// login to userSchema
 
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email: email });
