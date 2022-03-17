@@ -31,6 +31,20 @@ router.post("/users/login", async (req, res) => {
   }
 });
 
+// route for logout users
+
+router.post("/users/logout", auth, async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token) => {
+      return token.token !== req.token;
+    });
+    await req.user.save();
+    res.send();
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
 // resource reading endpoints for users
 // for all users
 
