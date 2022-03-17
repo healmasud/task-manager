@@ -45,6 +45,18 @@ router.post("/users/logout", auth, async (req, res) => {
   }
 });
 
+// route for logout all seassions
+
+router.post("/users/logoutAll", auth, async (req, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.send();
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
 // resource reading endpoints for users
 // for all users
 
