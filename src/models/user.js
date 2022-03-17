@@ -4,56 +4,61 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Task = require("./task");
 
-// adding middleware
+// schema for user
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    requited: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    requited: true,
-    trim: true,
-    lowercase: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error("Email is invalid");
-      }
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      requited: true,
+      trim: true,
     },
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 4,
-    validate(value) {
-      if (value.toLowerCase().includes("password")) {
-        throw new Error("Password can not contain the word password");
-      }
-    },
-  },
-
-  age: {
-    type: Number,
-    default: 0,
-    validate(value) {
-      if (value < 0) {
-        throw new Error("Age must be a positive number");
-      }
-    },
-  },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
+    email: {
+      type: String,
+      unique: true,
+      requited: true,
+      trim: true,
+      lowercase: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Email is invalid");
+        }
       },
     },
-  ],
-});
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 4,
+      validate(value) {
+        if (value.toLowerCase().includes("password")) {
+          throw new Error("Password can not contain the word password");
+        }
+      },
+    },
+
+    age: {
+      type: Number,
+      default: 0,
+      validate(value) {
+        if (value < 0) {
+          throw new Error("Age must be a positive number");
+        }
+      },
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.virtual("tasks", {
   ref: "Task",
@@ -118,6 +123,8 @@ userSchema.pre("remove", async function (next) {
   await Task.deleteMany({ owner: user._id });
   next();
 });
+
+// modeling for user
 
 const User = mongoose.model("User", userSchema);
 
