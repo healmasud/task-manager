@@ -54,6 +54,17 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+// genarating public profile to hide hased password and tokens from loggedin user
+
+userSchema.methods.toJSON = function () {
+  const user = this;
+  const userObject = user.toObject();
+  delete userObject.password;
+  delete userObject.tokens;
+
+  return userObject;
+};
+
 // genarate auth tokens
 
 userSchema.methods.generateAuthToken = async function () {
