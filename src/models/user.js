@@ -54,6 +54,12 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+userSchema.virtual("tasks", {
+  ref: "Task",
+  localField: "_id",
+  foreignField: "owner",
+});
+
 // genarating public profile to hide hased password and tokens from loggedin user
 
 userSchema.methods.toJSON = function () {
