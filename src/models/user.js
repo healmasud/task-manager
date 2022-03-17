@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Task = require("./task");
 
 // adding middleware
 
@@ -107,6 +108,16 @@ userSchema.pre("save", async function (next) {
     user.password = await bcrypt.hash(user.password, 8);
   }
 
+  next();
+});
+
+// delete user tasks when user us remove
+
+userSchema.pre("remove", async function (next) {
+  const user = this;
+  Task.deleteMany({
+    owner: user._id,
+  });
   next();
 });
 
