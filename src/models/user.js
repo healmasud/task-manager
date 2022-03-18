@@ -10,13 +10,13 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      requited: true,
+      required: true,
       trim: true,
     },
     email: {
       type: String,
       unique: true,
-      requited: true,
+      required: true,
       trim: true,
       lowercase: true,
       validate(value) {
@@ -28,21 +28,20 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+      minlength: 7,
       trim: true,
-      minlength: 4,
       validate(value) {
         if (value.toLowerCase().includes("password")) {
-          throw new Error("Password can not contain the word password");
+          throw new Error('Password cannot contain "password"');
         }
       },
     },
-
     age: {
       type: Number,
       default: 0,
       validate(value) {
         if (value < 0) {
-          throw new Error("Age must be a positive number");
+          throw new Error("Age must be a postive number");
         }
       },
     },
@@ -54,6 +53,9 @@ const userSchema = new mongoose.Schema(
         },
       },
     ],
+    avatar: {
+      type: Buffer,
+    },
   },
   {
     timestamps: true,
