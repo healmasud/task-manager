@@ -19,7 +19,6 @@ router.post("/tasks", auth, async (req, res) => {
 });
 
 // resource reading endpoints for tasks
-// for all tasks
 // GET /tasks?completed=true
 // GET /tasks?limit=10&skip=20
 // GET /tasks?sortBy=createdAt:desc
