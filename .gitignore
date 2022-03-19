@@ -1,4 +1,4 @@
-## Ignore node modules
-
+## Ignore 
 node_modules/
 config/
+tests/
