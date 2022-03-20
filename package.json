@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "env-cmd ./config/dev.env nodemon src/index.js",
-    "test": "jest"
+    "test": "env-cmd ./config/test.env jest --testEnvironment=node --verbose --forceExit --watchAll --maxWorkers=1"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "env-cmd": "^8.0.2",
     "jest": "^23.6.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "supertest": "^3.4.1"
   }
 }
